@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 class Obstacle():
     def __init__(self, image, type):
         self.image = image
-        self.type = type
+        self.type = type    
         self.rect = self.image[self.type].get_rect()
         self.rect.x = SCREEN_WIDTH
 
@@ -12,6 +12,7 @@ class Obstacle():
         self.rect.x = self.rect.x - game_speed
         if self.rect.x < - self.rect.width:
             obstacles.pop()
+            
 
     def draw(self, screen):
-        screen.blit(self.image[self.type], self.rect)           
+        screen.blit(self.image[self.type], self.rect)          

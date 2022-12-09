@@ -1,15 +1,29 @@
+import random
 import pygame
 from dino_runner.components.obstacle.cactus import Cactus
-from dino_runner.utils.constants import SMALL_CACTUS
+from dino_runner.components.obstacle.large_cactus import LargeCactus
+from dino_runner.components.obstacle.bird import Bird
+from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
+from dino_runner.components.obstacle.obstacle import Obstacle
+
 
 class ObstacleManager():
     def __init__(self):
         self.obstacles = []
-
+        self.index=0
+        
+        
+        #self.cactus_option = self.cactus_option.random()
         
     def update(self, game):
         if len(self.obstacles) == 0:
-            self.obstacles.append( Cactus(SMALL_CACTUS))
+            if random.randint(0,2) ==0:
+                self.obstacles.append( Cactus(SMALL_CACTUS))
+            elif random.randint(0,2) ==1:
+                self.obstacles.append( LargeCactus(LARGE_CACTUS))
+            elif random.randint(0,2) ==2:
+                self.obstacles.append( Bird(BIRD))
+                #self.obstacles.append(BIRD[0] if self.index <=5 else BIRD[1]) -> intentos para que el ave vuele :(        
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
@@ -34,7 +48,8 @@ class ObstacleManager():
                         game.death_count +=1
                         break
                 else:
-                    self.obstacles.remove(obstacle)    
+                    self.obstacles.remove(obstacle) 
+                       
                 
 
     def draw(self, screen):
